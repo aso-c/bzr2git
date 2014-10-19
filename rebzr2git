@@ -1,0 +1,30 @@
+#!/bin/bash
+
+lim=4
+#lim=51
+src='/etc'
+targetdir='etckeeper'
+
+echo "Entering work directory . . ." >&2
+echo -n "working directory is: " >&2
+pushd $targetdir >&2
+echo >&2
+
+#bzr co -r 1 $srs .
+
+for ((a=1; a<$lim+1; a++)) ; do
+  echo rev... $a >&2
+  bzr up -r $a
+  cp .bzrignore .gitignore
+  echo "\n.bzr" >> .gitignore
+  bzr log -r $a | tail -n +7 > ../msg
+  bzr log -r $a | head -n 5 | tail -n 1 > ../ti.me
+  git add .
+  git commit -F ../msg --date="$(echo ../ti.me)"
+  #git commit -F ../msg --date="$(echo ../ti.me)" --dry-run
+done
+
+echo >&2
+echo "Leave work directory . . . " >&2
+echo -n "return to directory: " >&2
+popd >&2
