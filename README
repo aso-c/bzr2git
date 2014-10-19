@@ -9,5 +9,6 @@ Transcoding bzr-repository to git:
 Repeate this operation sequentially.
 
 Copy .bzrignore into .gitignore & add on it ".bzr" line   on each loop pass.
-Commit message are extracted from bzr repository with "log" command & stored into tmp file msg.
-Commit date now is not extracted yet. It's unsuccess.
+Commit message & date are extracted from bzr repository with "log" command
+& stored into tmp file 'msg' & 'ti.me' respectively.
+Field 'commit author' is not extracted - I'm is not needed this.

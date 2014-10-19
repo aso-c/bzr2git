@@ -1,9 +1,32 @@
 #!/bin/bash
 
+#
+# rebzr2git - Recoding bzr-repository to git.
+#
+# Process is:
+#   - make checkout bazaar-repositiry from src to work (target) dir,
+#   - update bazaar repository to first revision
+#   - and commited this revision into git.
+# Repeate this operation sequentially.
+#
+# Copy .bzrignore into .gitignore & add on it ".bzr" line   on each loop pass.
+# Commit message & date are extracted from bzr repository with "log" command
+# & stored into tmp file 'msg' & 'ti.me' respectively.
+# Field 'commit author' is not extracted - now I'm is not needed in this.
+#
+# Author: Solomatov A.A (aso)
+# Date:   Sun Oct 19 15:09:27 2014 +0400
+# License: GPL v.3
+#
+
+# limit of passes: all number of commits in bazaar-repository 
 lim=4
 #lim=51
+# Source directory with bazaar repository
 src='/etc'
+# Target directory, in which the work will take place 
 targetdir='etckeeper'
+
 
 echo "Entering work directory . . ." >&2
 echo -n "working directory is: " >&2
@@ -28,4 +51,5 @@ echo >&2
 echo "Leave work directory . . . " >&2
 echo -n "return to directory: " >&2
 popd >&2
-#cat ti.me.org | sed -e 's/timestamp: [^ ]\{,4\} //'
+
+#eof
