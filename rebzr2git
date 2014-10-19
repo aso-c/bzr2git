@@ -25,12 +25,15 @@ lim=4
 # Source directory with bazaar repository
 src='/etc'
 # Target directory, in which the work will take place 
-targetdir='etckeeper'
+#work='etckeeper'
+work='/root/prj/etckeeper'
 
+
+tmprefx='/tmp'
 
 echo "Entering work directory . . ." >&2
 echo -n "working directory is: " >&2
-pushd $targetdir >&2
+pushd $work >&2
 echo >&2
 
 #bzr co -r 1 $srs .
@@ -40,16 +43,17 @@ for ((a=1; a<$lim+1; a++)) ; do
   bzr up -r $a
   cp .bzrignore .gitignore
   echo "\n.bzr" >> .gitignore
-  bzr log -r $a | tail -n +7 > ../msg
-  bzr log -r $a | head -n 5 | tail -n 1 | sed -e 's/timestamp: [^ ]\{,4\} //' > ../ti.me
-  git add .
-  git commit -F ../msg --date="{$(cat ../ti.me)}"
+  bzr log -r $a | tail -n +7 > "$tmprefx/msg"
+  bzr log -r $a | head -n 5 | tail -n 1 | sed -e 's/timestamp: [^ ]\{,4\} //' > "$tmprefx/ti.me"
+  git add -A .
+  git commit -F "$tmprefx/msg" --date="{$(cat "$tmprefx/ti.me")}"
   #git commit -F ../msg --date="$(echo ../ti.me)" --dry-run
 done
+rm -f "$tmprefx/msg"
+rm -f "$tmprefx/ti.me"
 
 echo >&2
 echo "Leave work directory . . . " >&2
 echo -n "return to directory: " >&2
 popd >&2
 
-#eof
