@@ -18,9 +18,9 @@ for ((a=1; a<$lim+1; a++)) ; do
   cp .bzrignore .gitignore
   echo "\n.bzr" >> .gitignore
   bzr log -r $a | tail -n +7 > ../msg
-  bzr log -r $a | head -n 5 | tail -n 1 > ../ti.me
+  bzr log -r $a | head -n 5 | tail -n 1 | sed -e 's/timestamp: [^ ]\{,4\} //' > ../ti.me
   git add .
-  git commit -F ../msg --date="$(echo ../ti.me)"
+  git commit -F ../msg --date="{$(cat ../ti.me)}"
   #git commit -F ../msg --date="$(echo ../ti.me)" --dry-run
 done
 
@@ -28,3 +28,4 @@ echo >&2
 echo "Leave work directory . . . " >&2
 echo -n "return to directory: " >&2
 popd >&2
+#cat ti.me.org | sed -e 's/timestamp: [^ ]\{,4\} //'
