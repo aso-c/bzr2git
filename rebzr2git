@@ -37,16 +37,22 @@ pushd $work >&2
 echo >&2
 
 #bzr co -r 1 $srs .
+git init
 
 for ((a=1; a<$lim+1; a++)) ; do
   echo rev... $a >&2
   bzr up -r $a
   cp .bzrignore .gitignore
-  echo "\n.bzr" >> .gitignore
+  echo >> .gitignore
+  echo ".bzr" >> .gitignore
   bzr log -r $a | tail -n +7 > "$tmprefx/msg"
   bzr log -r $a | head -n 5 | tail -n 1 | sed -e 's/timestamp: [^ ]\{,4\} //' > "$tmprefx/ti.me"
   git add -A .
+#  sleep 4
+  sleep 2
   git commit -F "$tmprefx/msg" --date="{$(cat "$tmprefx/ti.me")}"
+#  sleep 3
+  sleep 1
   #git commit -F ../msg --date="$(echo ../ti.me)" --dry-run
 done
 rm -f "$tmprefx/msg"
