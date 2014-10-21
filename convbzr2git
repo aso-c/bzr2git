@@ -1,12 +1,14 @@
 #!/bin/bash
 
 #
-# rebzr2git - Recoding bzr-repository to git.
+# convbzr2git - Recoding bzr-repository to git.
 #
 # Process is:
 #   - make checkout bazaar-repositiry from src to work (target) dir,
 #   - update bazaar repository to first revision
 #   - and commited this revision into git.
+#   - copy .bzrignore into .gitignore & add on it ".bzr" line
+#       on each loop pass.
 # Repeate this operation sequentially.
 #
 # Copy .bzrignore into .gitignore & add on it ".bzr" line   on each loop pass.
